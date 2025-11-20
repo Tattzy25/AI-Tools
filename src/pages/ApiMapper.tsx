@@ -251,8 +251,8 @@ const ApiMapper = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">API Endpoint Mapper</h1>
-        <p className="text-gray-600">
+        <h1 className="text-3xl font-bold text-foreground mb-2">API Endpoint Mapper</h1>
+        <p className="text-muted-foreground">
           Connect two API endpoints with intelligent data mapping and transformation capabilities.
         </p>
       </div>
@@ -262,9 +262,9 @@ const ApiMapper = () => {
         {/* Source and Target Endpoints */}
         <div className="grid md:grid-cols-2 gap-8">
           {/* Source Endpoint */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+          <div className="bg-card rounded-lg shadow-md p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+              <div className="w-3 h-3 bg-primary rounded-full"></div>
               Source Endpoint
             </h3>
             
@@ -295,7 +295,7 @@ const ApiMapper = () => {
                 <Label className="mb-1 block text-sm">URL</Label>
                 <Input type="url" {...register('sourceEndpoint')} placeholder="https://api.example.com/data" />
                 {errors.sourceEndpoint && (
-                  <p className="text-red-500 text-sm mt-1">{errors.sourceEndpoint.message}</p>
+                  <p className="text-destructive text-sm mt-1">{errors.sourceEndpoint.message}</p>
                 )}
               </div>
               
@@ -330,9 +330,9 @@ const ApiMapper = () => {
           </div>
 
           {/* Target Endpoint */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+          <div className="bg-card rounded-lg shadow-md p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+              <div className="w-3 h-3 bg-chart-2 rounded-full"></div>
               Target Endpoint
             </h3>
             
@@ -363,7 +363,7 @@ const ApiMapper = () => {
                 <Label className="mb-1 block text-sm">URL</Label>
                 <Input type="url" {...register('targetEndpoint')} placeholder="https://api.example.com/target" />
                 {errors.targetEndpoint && (
-                  <p className="text-red-500 text-sm mt-1">{errors.targetEndpoint.message}</p>
+                  <p className="text-destructive text-sm mt-1">{errors.targetEndpoint.message}</p>
                 )}
               </div>
               
@@ -399,24 +399,24 @@ const ApiMapper = () => {
         </div>
 
         {/* Mapping Rules */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-card rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Mapping Rules</h3>
+            <h3 className="text-lg font-semibold text-foreground">Mapping Rules</h3>
             <Button type="button" onClick={addMappingRule} className="inline-flex items-center gap-2">
-              <Plus className="h-4 w-4" />
+              <Plus aria-hidden="true" className="h-4 w-4" />
               Add Rule
             </Button>
           </div>
           
           <div className="space-y-4">
             {mappingRules.map((rule, index) => (
-              <div key={index} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
+              <div key={index} className="flex items-center gap-4 p-4 border border-border rounded-lg">
                 <div className="flex-1">
                   <Input {...register(`mappingRules.${index}.sourceField`)} placeholder="Source field (e.g., user.name)" />
                 </div>
                 
-                <div className="flex items-center gap-2 text-gray-500">
-                  <ArrowRight className="h-4 w-4" />
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
                   <Controller
                     name={`mappingRules.${index}.transformationType` as const}
                     control={control}
@@ -447,7 +447,7 @@ const ApiMapper = () => {
                   </div>
                   
                   <Button type="button" variant="ghost" onClick={() => removeMappingRule(index)}>
-                    <Trash2 className="h-4 w-4 text-destructive" />
+                    <Trash2 aria-hidden="true" className="h-4 w-4 text-destructive" />
                   </Button>
                 </div>
               </div>
@@ -455,7 +455,7 @@ const ApiMapper = () => {
           </div>
           
           {errors.mappingRules && (
-            <p className="text-red-500 text-sm mt-2">{errors.mappingRules.message}</p>
+            <p className="text-destructive text-sm mt-2">{errors.mappingRules.message}</p>
           )}
         </div>
 
@@ -463,18 +463,18 @@ const ApiMapper = () => {
         <div className="flex justify-between items-center">
           <div className="flex gap-2">
             <Button type="button" variant="outline" onClick={copyMappingConfig} className="inline-flex items-center gap-2">
-              <Copy className="h-4 w-4" />
+              <Copy aria-hidden="true" className="h-4 w-4" />
               Copy Config
             </Button>
             
             <Button type="button" variant="outline" onClick={downloadMappingConfig} className="inline-flex items-center gap-2">
-              <Download className="h-4 w-4" />
+              <Download aria-hidden="true" className="h-4 w-4" />
               Download Config
             </Button>
           </div>
           
           <Button type="submit" className="inline-flex items-center gap-2">
-            <Play className="h-4 w-4" />
+            <Play aria-hidden="true" className="h-4 w-4" />
             Test Connection
           </Button>
         </div>
@@ -482,22 +482,22 @@ const ApiMapper = () => {
 
       {/* Test Results */}
       {(testResults.sourceStatus !== 'idle' || testResults.targetStatus !== 'idle') && (
-        <div className="mt-8 bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Test Results</h3>
+        <div className="mt-8 bg-card rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Test Results</h3>
           
           <div className="grid md:grid-cols-2 gap-6">
             {/* Source Endpoint Result */}
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <h4 className="font-medium text-gray-900">Source Endpoint</h4>
-                {testResults.sourceStatus === 'success' && <CheckCircle className="h-5 w-5 text-green-500" />}
-                {testResults.sourceStatus === 'error' && <AlertCircle className="h-5 w-5 text-red-500" />}
-                {testResults.sourceStatus === 'loading' && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>}
+                <h4 className="font-medium text-foreground">Source Endpoint</h4>
+                {testResults.sourceStatus === 'success' && <CheckCircle aria-hidden="true" className="h-5 w-5 text-chart-2" />}
+                {testResults.sourceStatus === 'error' && <AlertCircle aria-hidden="true" className="h-5 w-5 text-destructive" />}
+                {testResults.sourceStatus === 'loading' && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-ring"></div>}
               </div>
               
               {testResults.sourceData && (
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <pre className="text-sm text-gray-700 overflow-auto max-h-40">
+                <div className="bg-muted rounded-lg p-4">
+                  <pre className="text-sm text-muted-foreground overflow-auto max-h-40">
                     {JSON.stringify(testResults.sourceData, null, 2)}
                   </pre>
                 </div>
@@ -507,15 +507,15 @@ const ApiMapper = () => {
             {/* Target Endpoint Result */}
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <h4 className="font-medium text-gray-900">Target Endpoint</h4>
-                {testResults.targetStatus === 'success' && <CheckCircle className="h-5 w-5 text-green-500" />}
-                {testResults.targetStatus === 'error' && <AlertCircle className="h-5 w-5 text-red-500" />}
-                {testResults.targetStatus === 'loading' && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-green-500"></div>}
+                <h4 className="font-medium text-foreground">Target Endpoint</h4>
+                {testResults.targetStatus === 'success' && <CheckCircle aria-hidden="true" className="h-5 w-5 text-chart-2" />}
+                {testResults.targetStatus === 'error' && <AlertCircle aria-hidden="true" className="h-5 w-5 text-destructive" />}
+                {testResults.targetStatus === 'loading' && <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-ring"></div>}
               </div>
               
               {testResults.transformedData && (
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <pre className="text-sm text-gray-700 overflow-auto max-h-40">
+                <div className="bg-muted rounded-lg p-4">
+                  <pre className="text-sm text-muted-foreground overflow-auto max-h-40">
                     {JSON.stringify(testResults.transformedData, null, 2)}
                   </pre>
                 </div>
@@ -524,12 +524,12 @@ const ApiMapper = () => {
           </div>
           
           {testResults.error && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="mt-4 p-4 bg-muted border border-border rounded-lg">
               <div className="flex items-center gap-2">
-                <AlertCircle className="h-5 w-5 text-red-500" />
-                <span className="text-red-700 font-medium">Error:</span>
+                <AlertCircle aria-hidden="true" className="h-5 w-5 text-destructive" />
+                <span className="text-destructive font-medium">Error:</span>
               </div>
-              <p className="text-red-600 mt-1">{testResults.error}</p>
+              <p className="text-destructive mt-1">{testResults.error}</p>
             </div>
           )}
         </div>

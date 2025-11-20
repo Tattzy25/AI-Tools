@@ -32,11 +32,11 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-white border-b">
+    <nav className="bg-card border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
+            <Sparkles aria-hidden="true" className="h-6 w-6 text-primary" />
             <span className="text-lg font-semibold">AI Power Tools</span>
           </Link>
 
@@ -52,9 +52,9 @@ const Navbar = () => {
                           ? 'bg-accent text-accent-foreground px-3 py-2 rounded-md'
                           : 'px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground'
                       }>
-                        <Link to={item.href}>
+                        <Link to={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
                           <span className="inline-flex items-center gap-2 text-sm">
-                            <Icon className="h-4 w-4" />
+                            <Icon aria-hidden="true" className="h-4 w-4" />
                             {item.name}
                           </span>
                         </Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
 
           <div className="md:hidden">
             <Button variant="outline" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMenuOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
             </Button>
           </div>
         </div>
@@ -91,7 +91,7 @@ const Navbar = () => {
                       : 'flex items-center gap-2 px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground'
                   }
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon aria-hidden="true" className="h-5 w-5" />
                   <span>{item.name}</span>
                 </Link>
               );

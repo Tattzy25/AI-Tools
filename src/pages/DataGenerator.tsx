@@ -162,8 +162,8 @@ const DataGenerator = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Smart Data Generator</h1>
-        <p className="text-gray-600">
+        <h1 className="text-3xl font-bold text-foreground mb-2">Smart Data Generator</h1>
+        <p className="text-muted-foreground">
           Create custom data tables by defining horizontal and vertical headers. AI generates realistic data for each intersection.
         </p>
       </div>
@@ -175,7 +175,7 @@ const DataGenerator = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Type className="h-4 w-4 text-muted-foreground" />
+                  <Type aria-hidden="true" className="h-4 w-4 text-muted-foreground" />
                 </TooltipTrigger>
                 <TooltipContent>Define headers and types, then generate a dataset</TooltipContent>
               </Tooltip>
@@ -187,7 +187,7 @@ const DataGenerator = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Horizontal Headers */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Horizontal Headers</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Horizontal Headers</h3>
               <div className="space-y-3">
                 {horizontalHeaders.map((header, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -219,7 +219,7 @@ const DataGenerator = () => {
                   </div>
                 ))}
                 <Button type="button" variant="link" onClick={() => addHeader('horizontal')} className="inline-flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
+                  <Plus aria-hidden="true" className="h-4 w-4" />
                   Add Column
                 </Button>
               </div>
@@ -227,7 +227,7 @@ const DataGenerator = () => {
 
             {/* Vertical Headers */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Vertical Headers</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Vertical Headers</h3>
               <div className="space-y-3">
                 {verticalHeaders.map((header, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -244,7 +244,7 @@ const DataGenerator = () => {
                   </div>
                 ))}
                 <Button type="button" variant="link" onClick={() => addHeader('vertical')} className="inline-flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
+                  <Plus aria-hidden="true" className="h-4 w-4" />
                   Add Row
                 </Button>
               </div>
@@ -255,7 +255,7 @@ const DataGenerator = () => {
           <div className="mt-6">
             <Label className="mb-2 block">Creativity Level: {Math.round(creativityLevel * 100)}%</Label>
             <Input type="range" min="0" max="1" step="0.1" value={creativityLevel} onChange={(e) => setValue('creativityLevel', parseFloat(e.target.value))} />
-            <div className="flex justify-between text-xs text-gray-500 mt-1">
+            <div className="flex justify-between text-xs text-muted-foreground mt-1">
               <span>Conservative</span>
               <span>Balanced</span>
               <span>Creative</span>
@@ -267,12 +267,12 @@ const DataGenerator = () => {
             <Button type="submit" disabled={isGenerating} className="inline-flex items-center gap-2">
               {isGenerating ? (
                 <>
-                  <RefreshCw className="h-4 w-4 animate-spin" />
+                  <RefreshCw aria-hidden="true" className="h-4 w-4 animate-spin" />
                   Generating...
                 </>
               ) : (
                 <>
-                  <RefreshCw className="h-4 w-4" />
+                  <RefreshCw aria-hidden="true" className="h-4 w-4" />
                   Generate Data
                 </>
               )}
@@ -289,31 +289,31 @@ const DataGenerator = () => {
             <CardTitle className="text-lg">Generated Data</CardTitle>
             <div className="flex gap-2">
               <Button onClick={copyToClipboard} className="inline-flex items-center gap-2">
-                <Copy className="h-4 w-4" />
+                <Copy aria-hidden="true" className="h-4 w-4" />
                 Copy CSV
               </Button>
               <Button onClick={downloadCSV} className="inline-flex items-center gap-2">
-                <Download className="h-4 w-4" />
+                <Download aria-hidden="true" className="h-4 w-4" />
                 Download CSV
               </Button>
             </div>
           </CardHeader>
           <CardContent>
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-semibold text-gray-900">Generated Data</h3>
+            <h3 className="text-lg font-semibold text-foreground">Generated Data</h3>
             <div className="flex gap-2">
               <button
                 onClick={copyToClipboard}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary"
               >
-                <Copy className="h-4 w-4" />
+                <Copy aria-hidden="true" className="h-4 w-4" />
                 Copy CSV
               </button>
               <button
                 onClick={downloadCSV}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary"
               >
-                <Download className="h-4 w-4" />
+                <Download aria-hidden="true" className="h-4 w-4" />
                 Download CSV
               </button>
             </div>
@@ -321,8 +321,8 @@ const DataGenerator = () => {
 
           {/* Data Table */}
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-border">
+              <thead className="bg-muted">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     
@@ -330,7 +330,7 @@ const DataGenerator = () => {
                   {horizontalHeaders.map((header, index) => (
                     <th
                       key={index}
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider"
                     >
                       <div className="flex items-center gap-2">
                         {getDataTypeIcon(dataTypes[header] || 'text')}
@@ -340,20 +340,20 @@ const DataGenerator = () => {
                   ))}
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-card divide-y divide-border">
                 {generatedData.map((row, rowIndex) => (
-                  <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-card' : 'bg-muted'}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                       {verticalHeaders[rowIndex]}
                     </td>
                     {row.map((cell, colIndex) => (
-                      <td key={colIndex} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td key={colIndex} className="px-6 py-4 whitespace-nowrap text-sm text-foreground">
                     {editingCell?.row === rowIndex && editingCell?.col === colIndex ? (
                           <Input type="text" value={cell} onChange={(e) => updateCellValue(rowIndex, colIndex, e.target.value)} onBlur={() => setEditingCell(null)} onKeyDown={(e) => { if (e.key === 'Enter') { setEditingCell(null); } }} autoFocus />
                         ) : (
                           <div
                             onClick={() => setEditingCell({ row: rowIndex, col: colIndex })}
-                            className="cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
+                            className="cursor-pointer hover:bg-muted px-2 py-1 rounded"
                           >
                             {cell}
                           </div>

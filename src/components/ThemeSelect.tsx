@@ -1,10 +1,10 @@
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from './ui/select'
-import { useTheme } from '@/hooks/useTheme'
+import { useTheme } from 'next-themes'
 
 export default function ThemeSelect() {
-  const { mode, setMode } = useTheme()
+  const { theme, setTheme } = useTheme()
   return (
-    <Select value={mode} onValueChange={(v: any) => setMode(v)}>
+    <Select value={theme || 'system'} onValueChange={(v: any) => setTheme(v)}>
       <SelectTrigger className="w-[160px]">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>

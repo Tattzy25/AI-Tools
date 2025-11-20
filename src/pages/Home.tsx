@@ -18,7 +18,7 @@ const Home = () => {
       description: 'Upload multiple images and let AI extract detailed metadata including objects, colors, text, and visual information.',
       icon: Image,
       link: '/image-extraction',
-      color: 'bg-purple-500',
+      color: 'bg-primary',
       features: ['Object Detection', 'Color Analysis', 'Text Extraction', 'Batch Processing']
     },
     {
@@ -26,7 +26,7 @@ const Home = () => {
       description: 'Create custom data tables by defining horizontal and vertical headers. AI generates realistic data for each intersection.',
       icon: Table,
       link: '/data-generator',
-      color: 'bg-teal-500',
+      color: 'bg-chart-2',
       features: ['Custom Headers', 'AI Generation', 'Export Options', 'Templates']
     },
     {
@@ -34,7 +34,7 @@ const Home = () => {
       description: 'Connect two API endpoints with intelligent data mapping and transformation capabilities.',
       icon: GitBranch,
       link: '/api-mapper',
-      color: 'bg-orange-500',
+      color: 'bg-chart-3',
       features: ['Endpoint Testing', 'Data Mapping', 'Transformations', 'Real-time Validation']
     }
   ];
@@ -45,26 +45,26 @@ const Home = () => {
       <section className="text-center py-20">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-center mb-6">
-            <Sparkles className="h-12 w-12 text-purple-600 mr-4" />
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900">
+            <Sparkles aria-hidden="true" className="h-12 w-12 text-primary mr-4" />
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground">
               AI Power Tools
             </h1>
           </div>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Harness the power of artificial intelligence with three specialized tools for image analysis, 
             data generation, and API integration. Transform your workflow with intelligent automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/image-extraction"
-              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary transition-colors"
             >
               Get Started
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               to="/data-generator"
-              className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center px-6 py-3 border border-border text-foreground font-medium rounded-lg hover:bg-muted transition-colors"
             >
               Explore Tools
             </Link>
@@ -75,7 +75,7 @@ const Home = () => {
       {/* Features Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
             Powerful AI Tools at Your Fingertips
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -84,31 +84,31 @@ const Home = () => {
               return (
                 <div
                   key={index}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-8 border border-gray-100"
+                  className="bg-card rounded-xl shadow-lg hover:shadow-xl transition-shadow p-8 border border-border"
                 >
                   <div className={`${feature.color} w-16 h-16 rounded-lg flex items-center justify-center mb-6`}>
-                    <Icon className="h-8 w-8 text-white" />
+                    <Icon aria-hidden="true" className="h-8 w-8 text-primary-foreground" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  <h3 className="text-xl font-semibold text-foreground mb-4">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-muted-foreground mb-6">
                     {feature.description}
                   </p>
                   <ul className="space-y-2 mb-8">
                     {feature.features.map((item, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-gray-600">
-                        <Zap className="h-4 w-4 text-purple-500 mr-2" />
+                      <li key={idx} className="flex items-center text-sm text-muted-foreground">
+                        <Zap aria-hidden="true" className="h-4 w-4 text-primary mr-2" />
                         {item}
                       </li>
                     ))}
                   </ul>
                   <Link
                     to={feature.link}
-                    className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
+                    className="inline-flex items-center text-primary hover:text-primary font-medium"
                   >
                     Try it now
-                    <ArrowRight className="ml-1 h-4 w-4" />
+                    <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
                   </Link>
                 </div>
               );
@@ -118,27 +118,27 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gray-100">
+      <section className="py-20 bg-muted">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+          <h2 className="text-3xl font-bold text-foreground mb-8">
             Trusted by Developers Worldwide
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2">50K+</div>
-              <div className="text-gray-600">Images Analyzed</div>
+              <div className="text-3xl font-bold text-primary mb-2">50K+</div>
+              <div className="text-muted-foreground">Images Analyzed</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-teal-600 mb-2">10K+</div>
-              <div className="text-gray-600">Data Sets Generated</div>
+              <div className="text-3xl font-bold text-chart-2 mb-2">10K+</div>
+              <div className="text-muted-foreground">Data Sets Generated</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-orange-600 mb-2">5K+</div>
-              <div className="text-gray-600">API Connections</div>
+              <div className="text-3xl font-bold text-chart-3 mb-2">5K+</div>
+              <div className="text-muted-foreground">API Connections</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">99.9%</div>
-              <div className="text-gray-600">Uptime</div>
+              <div className="text-3xl font-bold text-foreground mb-2">99.9%</div>
+              <div className="text-muted-foreground">Uptime</div>
             </div>
           </div>
         </div>
