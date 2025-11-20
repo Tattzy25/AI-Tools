@@ -25,23 +25,23 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--muted);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: var(--border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: var(--ring);
 }
 
 /* Drag and drop styles */
 .drag-active {
-  border-color: #8b5cf6 !important;
-  background-color: #f3e8ff !important;
+  border-color: var(--ring) !important;
+  background-color: var(--muted) !important;
 }
 
 /* Loading animations */
@@ -67,13 +67,13 @@
 
 /* Table styles */
 .table-hover-row:hover {
-  background-color: #f9fafb;
+  background-color: var(--muted);
 }
 
 /* Input focus styles */
 .form-input:focus {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 /* Card hover effects */
@@ -83,5 +83,5 @@
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px var(--ring);
 }

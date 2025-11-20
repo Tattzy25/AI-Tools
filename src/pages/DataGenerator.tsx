@@ -98,13 +98,13 @@ const DataGenerator = () => {
 
   const getDataTypeIcon = (dataType: string) => {
     switch (dataType) {
-      case 'text': return <Type className="h-4 w-4" />;
-      case 'number': return <Hash className="h-4 w-4" />;
-      case 'date': return <Calendar className="h-4 w-4" />;
-      case 'boolean': return <ToggleLeft className="h-4 w-4" />;
-      case 'currency': return <DollarSign className="h-4 w-4" />;
-      case 'email': return <Mail className="h-4 w-4" />;
-      default: return <Type className="h-4 w-4" />;
+      case 'text': return <Type aria-hidden="true" className="h-4 w-4" />;
+      case 'number': return <Hash aria-hidden="true" className="h-4 w-4" />;
+      case 'date': return <Calendar aria-hidden="true" className="h-4 w-4" />;
+      case 'boolean': return <ToggleLeft aria-hidden="true" className="h-4 w-4" />;
+      case 'currency': return <DollarSign aria-hidden="true" className="h-4 w-4" />;
+      case 'email': return <Mail aria-hidden="true" className="h-4 w-4" />;
+      default: return <Type aria-hidden="true" className="h-4 w-4" />;
     }
   };
 
@@ -324,7 +324,7 @@ const DataGenerator = () => {
             <table className="min-w-full divide-y divide-border">
               <thead className="bg-muted">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     
                   </th>
                   {horizontalHeaders.map((header, index) => (
