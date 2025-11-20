@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '../../../components/ui/button'
-import { Image as ImageIcon, Palette, Type, Search } from 'lucide-react'
+import { Image as ImageIcon, Palette, Type, Search, FileText, Code, FileSpreadsheet } from 'lucide-react'
 import { TabKey } from '../hooks/useImageExtraction'
 
 export function ResultsTabs(props: { activeTab: TabKey; setActiveTab: (t: TabKey) => void }) {
@@ -9,7 +9,10 @@ export function ResultsTabs(props: { activeTab: TabKey; setActiveTab: (t: TabKey
     { id: 'all', label: 'All Results', icon: ImageIcon },
     { id: 'objects', label: 'Objects', icon: Search },
     { id: 'colors', label: 'Colors', icon: Palette },
-    { id: 'text', label: 'Text', icon: Type }
+    { id: 'text', label: 'Text', icon: Type },
+    { id: 'description', label: 'Description', icon: FileText },
+    { id: 'json', label: 'JSON', icon: Code },
+    { id: 'csv', label: 'CSV', icon: FileSpreadsheet }
   ] as const
   return (
     <div className="mb-6">

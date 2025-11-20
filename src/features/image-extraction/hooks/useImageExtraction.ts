@@ -4,7 +4,7 @@ import { AnalysisResult } from '../../../types'
 import { analyzeImages } from '../../../services/aiService'
 import { timeAsync } from '../../../hooks/usePerfMonitor'
 
-export type TabKey = 'objects' | 'colors' | 'text' | 'all'
+export type TabKey = 'objects' | 'colors' | 'text' | 'all' | 'description' | 'json' | 'csv'
 
 export function useImageExtraction(toast: { success: Function; error: Function; }): {
   images: File[]

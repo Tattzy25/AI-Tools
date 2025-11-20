@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { useToast } from '../hooks/use-toast';
 import { useImageExtraction } from '../features/image-extraction/hooks';
-import { UploadDropzone, PreviewGrid, ResultsTabs, ResultsList, ExportActions, FinalJsonSection } from '../features/image-extraction/components';
+import { UploadDropzone, PreviewGrid, ResultsTabs, ResultsList, ExportActions } from '../features/image-extraction/components';
 
 const ImageExtraction = () => {
   const { toast } = useToast();
@@ -51,7 +51,6 @@ const ImageExtraction = () => {
         </Card>
       )}
 
-      <FinalJsonSection results={analysisResults} />
     </div>
   );
 };
