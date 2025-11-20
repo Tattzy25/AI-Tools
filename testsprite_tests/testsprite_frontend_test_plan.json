@@ -1,0 +1,280 @@
+[
+  {
+    "id": "TC001",
+    "title": "Image upload and metadata extraction success",
+    "description": "Verify that users can upload images successfully and the AI extracts and displays accurate metadata.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Image Extraction page"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid image file using the upload control"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the image is accepted and display confirms upload"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify AI metadata extraction completes with accurate metadata displayed"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Image upload rejects unsupported file types",
+    "description": "Ensure that unsupported file types are rejected during image upload with an appropriate error notification.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Image Extraction page"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to upload an unsupported file type (e.g., .txt, .pdf)"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the upload is rejected"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an error toast notification appears explaining the invalid file type"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Generate tabular data with valid headers and types",
+    "description": "Validate that users can create tabular data by inputting valid headers and types and the AI generates corresponding data correctly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Data Generator page"
+      },
+      {
+        "type": "action",
+        "description": "Input a valid set of headers with respective data types"
+      },
+      {
+        "type": "action",
+        "description": "Trigger AI-based data generation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that generated tabular data matches specified headers and types"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Data Generator handles empty or invalid headers input",
+    "description": "Confirm that the system handles empty header inputs or invalid headers gracefully with validation errors and feedback.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Data Generator page"
+      },
+      {
+        "type": "action",
+        "description": "Leave headers empty or input invalid header names"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to generate data"
+      },
+      {
+        "type": "assertion",
+        "description": "Check form validation errors appear for required headers or invalid inputs"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no data generation attempt is made"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "API Mapper field mapping and data transformation",
+    "description": "Verify that users can select source and target APIs and successfully map and transform data fields using the interactive UI controls.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the API Mapper page"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid source API from the dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid target API from the dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Map source fields to target fields using the provided UI controls"
+      },
+      {
+        "type": "action",
+        "description": "Trigger data transformation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that the transformed data matches expected output based on mapping"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "API Mapper invalid mapping error handling",
+    "description": "Ensure the API Mapper handles incomplete or invalid field mapping gracefully with error messages and prevents flawed transformations.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the API Mapper page"
+      },
+      {
+        "type": "action",
+        "description": "Select source and target APIs"
+      },
+      {
+        "type": "action",
+        "description": "Leave required field mappings incomplete or invalid"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to transform data"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error messages are shown indicating incomplete or invalid mappings"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that data transformation does not proceed"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Responsive Navbar functionality with mobile toggle",
+    "description": "Test that the top navigation bar using shadcn UI components is responsive and toggles correctly on mobile devices.",
+    "category": "ui",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Access the application on desktop browser and verify Navbar is visible with all menu items"
+      },
+      {
+        "type": "action",
+        "description": "Resize the browser to mobile viewport size or use a mobile device"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Navbar collapses into a toggle menu"
+      },
+      {
+        "type": "action",
+        "description": "Click the mobile toggle button"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that menu items become visible when toggled"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Toast notifications for success, error, and feedback",
+    "description": "Verify that toast notifications appear timely and convey appropriate messages for operation successes, failures, and system feedback.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Trigger a successful operation e.g., image upload or data generation"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that a success toast notification appears with correct message"
+      },
+      {
+        "type": "action",
+        "description": "Trigger an operation that results in error e.g., invalid file upload or invalid data mapping"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error toast notification appears with informative error message"
+      },
+      {
+        "type": "action",
+        "description": "Trigger system feedback notifications such as performance status or theme change"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify informational toast notifications appear accordingly"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Performance monitoring records operation durations accurately",
+    "description": "Check that the zustand store and timing helpers correctly capture and log operation durations for key interactions like AI calls and data transformations.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Perform operations such as image metadata extraction, data generation, and API data mapping"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify performance metrics are recorded in zustand store"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that operation durations correspond reasonably to real elapsed times"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Theme toggle and UI styling consistency across devices",
+    "description": "Ensure that the application theme can be toggled and that TailwindCSS styling is consistent across different browsers and device form factors.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Toggle theme settings to switch between available themes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI styling updates accordingly to reflect theme changes"
+      },
+      {
+        "type": "action",
+        "description": "Access the application on multiple device types and browsers"
+      },
+      {
+        "type": "assertion",
+        "description": "Check consistent styling and layout using TailwindCSS theme tokens"
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "executionArgs": {
+    "projectName": "iono",
+    "projectPath": "c:\\Users\\relay\\Downloads\\iono",
+    "testIds": [],
+    "additionalInstruction": "Cover core features and integration points across Home, ImageExtraction, DataGenerator, ApiMapper; 100% core coverage with regression; simulate high-volume interactions (200% capacity) and record performance metrics.",
+    "envs": {
+      "API_KEY": "sk-user-NCpXaDwjkghkAEsOfq4Xb_ZkIpubDF1OONwPZmERg7zNuo2fgPi39fcz2w7ntUfXa6_uBVqdd-rs4g-XTL6fOGi5cuqBe6-zCu2Idh7VJ04y_1p4P9qenBeThoJR4GNTjiU"
+    }
+  },
+  "proxy": "http://bc3b0c19-3cf9-4459-a09e-a459adb8728f:sN0O0aKuXCfQuoUADHvMRF5sLRXe2Rt8@tun.testsprite.com:8080"
+}

@@ -1,0 +1,59 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React",
+    "Vite",
+    "TailwindCSS",
+    "shadcn/ui (Radix)",
+    "react-hook-form",
+    "zod",
+    "zustand",
+    "react-router-dom",
+    "axios",
+    "react-dropzone",
+    "date-fns",
+    "recharts"
+  ],
+  "features": [
+    {
+      "name": "Navbar",
+      "description": "Top navigation with shadcn NavigationMenu and mobile toggle",
+      "files": ["src/components/Navbar.tsx", "src/components/ui/navigation-menu.tsx", "src/components/ui/button.tsx"]
+    },
+    {
+      "name": "Home Page",
+      "description": "Landing page content and routing entry",
+      "files": ["src/pages/Home.tsx", "src/App.tsx"]
+    },
+    {
+      "name": "Image Extraction",
+      "description": "Upload images and analyze metadata using AI; shadcn Cards/Buttons/Tooltips",
+      "files": ["src/pages/ImageExtraction.tsx", "src/services/aiService.ts", "src/types.ts"]
+    },
+    {
+      "name": "Data Generator",
+      "description": "Generate tabular data via AI with headers and types; shadcn UI",
+      "files": ["src/pages/DataGenerator.tsx", "src/services/aiService.ts"]
+    },
+    {
+      "name": "API Mapper",
+      "description": "Map and transform data between source and target APIs; shadcn UI with Cards/Select/Checkbox",
+      "files": ["src/pages/ApiMapper.tsx"]
+    },
+    {
+      "name": "Performance Monitoring",
+      "description": "Zustand store and timing helper to record operation durations",
+      "files": ["src/hooks/usePerfMonitor.ts"]
+    },
+    {
+      "name": "Toast System",
+      "description": "shadcn toast provider and hooks for user feedback",
+      "files": ["src/components/ui/toast.tsx", "src/components/ui/toaster.tsx", "src/hooks/use-toast.ts"]
+    },
+    {
+      "name": "Theme + Tailwind",
+      "description": "Tailwind configuration and theme tokens for styling",
+      "files": ["tailwind.config.js", "src/index.css"]
+    }
+  ]
+}
