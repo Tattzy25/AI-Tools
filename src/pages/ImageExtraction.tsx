@@ -48,7 +48,12 @@ const ImageExtraction = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
+      'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp'],
+      'text/plain': ['.txt'],
+      'application/json': ['.json'],
+      'text/csv': ['.csv'],
+      'application/xml': ['.xml'],
+      'text/xml': ['.xml']
     },
     maxSize: 10 * 1024 * 1024 // 10MB
   });
@@ -67,30 +72,9 @@ const ImageExtraction = () => {
 
     setIsAnalyzing(true);
     try {
-      const batch = images.slice(0, 5);
-      const hybridResults: any[] = [];
-      const apiBase = import.meta.env.VITE_API_BASE_URL || '';
-      const endpoint = apiBase ? `${apiBase}/api/analyze-image` : '/api/analyze-image';
-      for (const file of batch) {
-        const formData = new FormData();
-        formData.append('image', file);
-        const resp = await fetch(endpoint, { method: 'POST', body: formData });
-        const result = await resp.json();
-        hybridResults.push(result);
-      }
-      // Map hybrid JSON to UI-friendly structure
-      const mapped = hybridResults.map((r) => ({
-        confidence: typeof r?.visual_analysis?.ai_analysis?.confidence === 'number'
-          ? r.visual_analysis.ai_analysis.confidence
-          : undefined,
-        objects: (r?.visual_analysis?.ai_analysis?.objects || []).map((o: any) => ({ name: o.name, confidence: o.confidence })),
-        colors: (r?.visual_analysis?.ai_analysis?.colors || []).map((c: any) => ({ hex: c.hex, name: c.name, percentage: c.percentage })),
-        text: r?.visual_analysis?.ai_analysis?.text || [],
-        description: r?.visual_analysis?.ai_analysis?.description || '',
-        metadata: { format: r?.summary?.format, size: r?.summary?.dimensions, raw: r },
-      }));
-      setAnalysisResults(mapped);
-      toast({ title: 'Analysis complete', description: `Analyzed ${mapped.length} image(s)` });
+      const mapped = await analyzeImages(images.slice(0, 5))
+      setAnalysisResults(mapped)
+      toast({ title: 'Analysis complete', description: `Analyzed ${mapped.length} image(s)` })
     } catch (error) {
       toast({ title: 'Analysis failed', description: 'Please try again.', variant: 'destructive' });
       console.error('Analysis error:', error);
@@ -130,13 +114,13 @@ const ImageExtraction = () => {
       {/* Upload Section */}
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">Upload Images
+          <CardTitle className="flex items-center gap-2">Upload Files
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Eye className="h-4 w-4 text-muted-foreground" />
                 </TooltipTrigger>
-                <TooltipContent>Drag and drop or click to select images (max 10MB)</TooltipContent>
+                <TooltipContent>Drag and drop or click to select files (max 10MB)</TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </CardTitle>
@@ -157,7 +141,7 @@ const ImageExtraction = () => {
             {isDragActive ? 'Drop the images here...' : 'Drag & drop images here, or click to select'}
           </p>
           <p className="text-sm text-gray-500">
-            Supports JPG, PNG, GIF, WebP (max 10MB per image)
+            Supports JPG, PNG, GIF, WebP, TXT, JSON, CSV, XML (max 10MB per file)
           </p>
         </div>
 
@@ -219,6 +203,38 @@ const ImageExtraction = () => {
               <Button onClick={downloadResults} className="inline-flex items-center gap-2">
                 <Download className="h-4 w-4" />
                 Export JSON
+              </Button>
+              <Button variant="outline" onClick={() => {
+                const reports = analysisResults.map((r: any) => r?.metadata?.raw).filter(Boolean);
+                if (reports.length === 0) return;
+                if (reports.length === 1) {
+                  const csv = reports[0]?.csv_report || '';
+                  const blob = new Blob([csv], { type: 'text/csv' });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = 'analysis-report.csv';
+                  link.click();
+                  URL.revokeObjectURL(url);
+                  toast.success('CSV downloaded');
+                } else {
+                  const combined = reports
+                    .map((rep, idx) => String(rep?.csv_report || '')
+                      .split('\n').filter(Boolean)
+                      .map((line) => `file_${idx + 1},${line}`).join('\n'))
+                    .join('\n');
+                  const blob = new Blob([combined], { type: 'text/csv' });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = 'combined-analysis-report.csv';
+                  link.click();
+                  URL.revokeObjectURL(url);
+                  toast.success('Combined CSV downloaded');
+                }
+              }} className="inline-flex items-center gap-2">
+                <Download className="h-4 w-4" />
+                Export CSV
               </Button>
             </div>
           </CardHeader>
@@ -352,15 +368,37 @@ const ImageExtraction = () => {
       {analysisResults.length > 1 && (
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle>Final JSON Report (All Images)</CardTitle>
+            <CardTitle>Final JSON Reports</CardTitle>
           </CardHeader>
           <CardContent>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="multiple" className="w-full">
+              {analysisResults.map((r, idx) => (
+                <AccordionItem key={`final-${idx}`} value={`final-${idx}`}>
+                  <AccordionTrigger>Image {idx + 1} — Final JSON</AccordionTrigger>
+                  <AccordionContent>
+                    {(() => {
+                      const report = (r as any)?.metadata?.raw || {}
+                      const text = JSON.stringify(report, null, 2)
+                      return (
+                        <>
+                          <pre className="text-sm font-mono overflow-auto max-h-80 p-4 bg-muted rounded-md">{text}</pre>
+                          <div className="mt-2 flex justify-end">
+                            <Button variant="outline" onClick={() => navigator.clipboard.writeText(text)} className="inline-flex items-center gap-2">
+                              <Copy className="h-4 w-4" />
+                              Copy
+                            </Button>
+                          </div>
+                        </>
+                      )
+                    })()}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
               <AccordionItem value="combined">
                 <AccordionTrigger>Combined JSON (expand to view)</AccordionTrigger>
                 <AccordionContent>
                   {(() => {
-                    const reports = analysisResults.map((r) => (r as any)?.metadata?.raw).filter(Boolean)
+                    const reports = analysisResults.map((x) => (x as any)?.metadata?.raw).filter(Boolean)
                     const combined = { success: true, count: reports.length, reports }
                     const combinedText = JSON.stringify(combined, null, 2)
                     return (

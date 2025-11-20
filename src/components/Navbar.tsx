@@ -10,6 +10,7 @@ import {
   Sparkles 
 } from 'lucide-react';
 import { Button } from './ui/button';
+import ThemeSelect from './ThemeSelect';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -39,7 +40,7 @@ const Navbar = () => {
             <span className="text-lg font-semibold">AI Power Tools</span>
           </Link>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-4">
             <NavigationMenu>
               <NavigationMenuList>
                 {navigation.map((item) => {
@@ -63,6 +64,7 @@ const Navbar = () => {
                 })}
               </NavigationMenuList>
             </NavigationMenu>
+            <ThemeSelect />
           </div>
 
           <div className="md:hidden">
@@ -94,6 +96,9 @@ const Navbar = () => {
                 </Link>
               );
             })}
+            <div className="pt-2">
+              <ThemeSelect />
+            </div>
           </div>
         </div>
       )}

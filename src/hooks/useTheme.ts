@@ -1,29 +1,38 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react'
 
-type Theme = 'light' | 'dark';
+type ThemeMode = 'light' | 'dark' | 'system'
 
-export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) {
-      return savedTheme;
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+const storageKey = 'theme-mode'
+
+const getSystemPrefersDark = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+
+const applyTheme = (mode: ThemeMode) => {
+  const isDark = mode === 'dark' ? true : mode === 'light' ? false : getSystemPrefersDark()
+  const root = document.documentElement
+  root.classList.toggle('dark', isDark)
+}
+
+export const useTheme = () => {
+  const [mode, setMode] = useState<ThemeMode>('system')
 
   useEffect(() => {
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    const saved = (localStorage.getItem(storageKey) as ThemeMode) || 'system'
+    setMode(saved)
+    applyTheme(saved)
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const handler = () => {
+      const current = (localStorage.getItem(storageKey) as ThemeMode) || 'system'
+      if (current === 'system') applyTheme('system')
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+  const update = (next: ThemeMode) => {
+    setMode(next)
+    localStorage.setItem(storageKey, next)
+    applyTheme(next)
+  }
 
-  return {
-    theme,
-    toggleTheme,
-    isDark: theme === 'dark'
-  };
-} 
+  return { mode, setMode: update }
+}

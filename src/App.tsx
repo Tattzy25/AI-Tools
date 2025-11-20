@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster';
 import Navbar from './components/Navbar';
@@ -21,6 +22,7 @@ function App() {
           </Routes>
         </main>
         <Toaster />
+        <Analytics />
       </div>
     </Router>
   );
