@@ -9,7 +9,7 @@ export function FinalJsonSection(props: { results: AnalysisResult[] }) {
   const { results } = props
   if (results.length === 0) return null
   if (results.length === 1) {
-    const report = (results[0] as any)?.metadata?.raw || {}
+    const report = (results[0].metadata.raw as Record<string, unknown>) || {}
     const text = JSON.stringify(report, null, 2)
     return (
       <Card className="mt-8">
@@ -36,7 +36,7 @@ export function FinalJsonSection(props: { results: AnalysisResult[] }) {
       <CardContent>
         <Accordion type="multiple" className="w-full">
           {results.map((r, idx) => {
-            const report = (r as any)?.metadata?.raw || {}
+            const report = (r.metadata.raw as Record<string, unknown>) || {}
             const text = JSON.stringify(report, null, 2)
             return (
               <AccordionItem key={`final-${idx}`} value={`final-${idx}`}>
@@ -57,7 +57,7 @@ export function FinalJsonSection(props: { results: AnalysisResult[] }) {
             <AccordionTrigger>Combined JSON (expand to view)</AccordionTrigger>
             <AccordionContent>
               {(() => {
-                const reports = results.map((x) => (x as any)?.metadata?.raw).filter(Boolean)
+                const reports = results.map((x) => x.metadata.raw).filter(Boolean)
                 const combined = { success: true, count: reports.length, reports }
                 const combinedText = JSON.stringify(combined, null, 2)
                 return (

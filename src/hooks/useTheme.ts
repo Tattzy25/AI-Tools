@@ -13,12 +13,10 @@ const applyTheme = (mode: ThemeMode) => {
 }
 
 export const useTheme = () => {
-  const [mode, setMode] = useState<ThemeMode>('system')
+  const [mode, setMode] = useState<ThemeMode>(() => (localStorage.getItem(storageKey) as ThemeMode) || 'system')
 
   useEffect(() => {
-    const saved = (localStorage.getItem(storageKey) as ThemeMode) || 'system'
-    setMode(saved)
-    applyTheme(saved)
+    applyTheme(mode)
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = () => {
       const current = (localStorage.getItem(storageKey) as ThemeMode) || 'system'
@@ -26,7 +24,7 @@ export const useTheme = () => {
     }
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
-  }, [])
+  }, [mode])
 
   const update = (next: ThemeMode) => {
     setMode(next)

@@ -13,7 +13,7 @@ type PerfState = {
   setThreshold: (ms: number) => void
 }
 
-export const usePerfMonitor = create<PerfState>((set, get) => ({
+export const usePerfMonitor = create<PerfState>((set) => ({
   metrics: [],
   thresholdMs: 1500,
   addMetric: (m) => {

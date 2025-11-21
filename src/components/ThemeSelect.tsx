@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes'
 export default function ThemeSelect() {
   const { theme, setTheme } = useTheme()
   return (
-    <Select value={theme || 'system'} onValueChange={(v: any) => setTheme(v)}>
+    <Select value={theme || 'system'} onValueChange={(v: string) => setTheme(v)}>
       <SelectTrigger className="w-[160px]">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>

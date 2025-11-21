@@ -3,25 +3,11 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import axios from 'axios';
-import {
-  Link,
-  Unlink,
-  Play,
-  Save,
-  Download,
-  Copy,
-  Trash2,
-  Plus,
-  ArrowRight,
-  AlertCircle,
-  CheckCircle
-} from 'lucide-react';
+import { Play, Download, Copy, Trash2, Plus, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Checkbox } from '../components/ui/checkbox';
-import { Separator } from '../components/ui/separator';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../components/ui/select';
 import { useToast } from '../hooks/use-toast';
 import { timeAsync } from '../hooks/usePerfMonitor';
@@ -44,7 +30,13 @@ const apiMapperSchema = z.object({
     targetField: z.string().min(1, 'Target field is required'),
     transformationType: z.enum(['direct', 'format', 'calculate', 'conditional']),
     isRequired: z.boolean(),
-    defaultValue: z.string().optional()
+    defaultValue: z.string().optional(),
+    format: z.string().optional(),
+    formula: z.string().optional(),
+    condition: z.string().optional(),
+    conditionValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
+    trueValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
+    falseValue: z.union([z.string(), z.number(), z.boolean()]).optional(),
   })).min(1, 'At least one mapping rule is required')
 });
 
@@ -55,8 +47,8 @@ const ApiMapper = () => {
   const [testResults, setTestResults] = useState<{
     sourceStatus: 'idle' | 'loading' | 'success' | 'error';
     targetStatus: 'idle' | 'loading' | 'success' | 'error';
-    sourceData?: any;
-    transformedData?: any;
+    sourceData?: Record<string, unknown>;
+    transformedData?: Record<string, unknown>;
     error?: string;
   }>({
     sourceStatus: 'idle',
@@ -122,8 +114,39 @@ const ApiMapper = () => {
     return headers;
   };
 
-  const transformData = (sourceData: any, rules: any[]) => {
-    const transformed: Record<string, any> = {};
+  const compute = (value: unknown, formula: string): unknown => {
+    if (typeof value !== 'number') return value;
+    const v = value as number;
+    const simpleOp = formula.trim();
+    const m1 = simpleOp.match(/^\s*\{value\}\s*([+\-*/%])\s*(-?\d+(?:\.\d+)?)\s*$/);
+    if (m1) {
+      const op = m1[1];
+      const num = parseFloat(m1[2]);
+      switch (op) {
+        case '+': return v + num;
+        case '-': return v - num;
+        case '*': return v * num;
+        case '/': return num === 0 ? v : v / num;
+        case '%': return v % num;
+      }
+    }
+    const m2 = simpleOp.match(/^\s*(-?\d+(?:\.\d+)?)\s*([+\-*/%])\s*\{value\}\s*$/);
+    if (m2) {
+      const num = parseFloat(m2[1]);
+      const op = m2[2];
+      switch (op) {
+        case '+': return num + v;
+        case '-': return num - v;
+        case '*': return num * v;
+        case '/': return v === 0 ? num : num / v;
+        case '%': return num % v;
+      }
+    }
+    return value;
+  };
+
+  const transformData = (sourceData: Record<string, unknown>, rules: ApiMapperForm['mappingRules']) => {
+    const transformed: Record<string, unknown> = {};
     
     rules.forEach(rule => {
       if (rule.isRequired || sourceData[rule.sourceField] !== undefined) {
@@ -138,12 +161,7 @@ const ApiMapper = () => {
             break;
           case 'calculate':
             if (rule.formula) {
-              // Simple calculation support
-              try {
-                value = eval(rule.formula.replace('{value}', value));
-              } catch {
-                value = sourceData[rule.sourceField];
-              }
+              value = compute(value, rule.formula);
             }
             break;
           case 'conditional':
@@ -191,7 +209,7 @@ const ApiMapper = () => {
         ...getAuthHeaders(data.targetAuth)
       };
       
-      const targetResponse = await timeAsync('targetRequest', () => axios({
+      await timeAsync('targetRequest', () => axios({
         method: data.targetMethod,
         url: data.targetEndpoint,
         headers: targetHeaders,
@@ -206,8 +224,9 @@ const ApiMapper = () => {
       
       toast({ title: 'Success', description: 'Both endpoints connected successfully!' });
       
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || 'Connection failed';
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } }, message?: string };
+      const errorMessage = err.response?.data?.message || err.message || 'Connection failed';
       setTestResults(prev => ({
         ...prev,
         sourceStatus: prev.sourceStatus === 'loading' ? 'error' : prev.sourceStatus,

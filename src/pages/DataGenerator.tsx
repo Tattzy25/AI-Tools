@@ -8,7 +8,6 @@ import {
   Download,
   Copy,
   RefreshCw,
-  Save,
   Type,
   Hash,
   Calendar,
@@ -42,12 +41,9 @@ const DataGenerator = () => {
   const { toast } = useToast();
 
   const {
-    register,
     handleSubmit,
-    formState: { errors },
     setValue,
-    watch,
-    getValues
+    watch
   } = useForm<DataGeneratorForm>({
     resolver: zodResolver(dataGeneratorSchema),
     defaultValues: {

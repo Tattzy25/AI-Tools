@@ -4,7 +4,7 @@ import { Download } from 'lucide-react'
 import { AnalysisResult } from '../../../types'
 import { buildExportJsonPayload, buildSingleCsv, buildCombinedCsv, downloadBlob } from '../utils/exports'
 
-export function ExportActions(props: { results: AnalysisResult[]; toast: { success: Function } }) {
+export function ExportActions(props: { results: AnalysisResult[]; toast: { success: (msg: string) => void } }) {
   const { results, toast } = props
   const exportJson = () => {
     const payload = buildExportJsonPayload(results)
@@ -14,7 +14,7 @@ export function ExportActions(props: { results: AnalysisResult[]; toast: { succe
     toast.success('Results downloaded successfully')
   }
   const exportCsv = () => {
-    const reports = results.map((r: any) => r?.metadata?.raw).filter(Boolean)
+    const reports = results.map((r) => r.metadata.raw).filter(Boolean)
     if (reports.length === 0) return
     if (reports.length === 1) {
       const csv = buildSingleCsv(results[0])

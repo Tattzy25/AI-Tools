@@ -6,7 +6,7 @@ import { timeAsync } from '../../../hooks/usePerfMonitor'
 
 export type TabKey = 'objects' | 'colors' | 'text' | 'all' | 'description' | 'json' | 'csv'
 
-export function useImageExtraction(toast: { success: Function; error: Function; }): {
+export function useImageExtraction(toast: { success: (msg: string) => void; error: (msg: string) => void }): {
   images: File[]
   imagePreviews: string[]
   analysisResults: AnalysisResult[]
@@ -34,7 +34,7 @@ export function useImageExtraction(toast: { success: Function; error: Function; 
     setImages(newImages)
     const newPreviews = validFiles.map(file => URL.createObjectURL(file))
     setImagePreviews(prev => [...prev, ...newPreviews])
-  }, [images])
+  }, [images, toast])
 
   const dropzone = useDropzone({
     onDrop,
@@ -73,7 +73,7 @@ export function useImageExtraction(toast: { success: Function; error: Function; 
       const mapped = await timeAsync('analyzeImages', () => analyzeImages(images.slice(0, 5)))
       setAnalysisResults(mapped)
       toast.success(`Analyzed ${mapped.length} image(s)`) 
-    } catch (e) {
+    } catch {
       toast.error('Analysis failed. Please try again.')
     } finally {
       setIsAnalyzing(false)

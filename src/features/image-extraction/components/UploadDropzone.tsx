@@ -2,7 +2,7 @@ import React from 'react'
 import { Upload, Eye } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '../../../components/ui/tooltip'
 
-export function UploadDropzone(props: { getRootProps: any; getInputProps: any; isDragActive: boolean }) {
+export function UploadDropzone(props: { getRootProps: () => Record<string, unknown>; getInputProps: () => Record<string, unknown>; isDragActive: boolean }) {
   const { getRootProps, getInputProps, isDragActive } = props
   return (
     <div className="mb-8">

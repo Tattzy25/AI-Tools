@@ -6,7 +6,7 @@ import { UploadDropzone, PreviewGrid, ResultsTabs, ResultsList, ExportActions } 
 
 const ImageExtraction = () => {
   const { toast } = useToast();
-  const { images, imagePreviews, analysisResults, isAnalyzing, activeTab, setActiveTab, removeImage, analyze, dropzone, clearAll } = useImageExtraction({ success: (m: string) => toast({ title: 'Success', description: m }), error: (m: string) => toast({ title: 'Error', description: m, variant: 'destructive' }) } as any);
+  const { images, imagePreviews, analysisResults, isAnalyzing, activeTab, setActiveTab, removeImage, analyze, dropzone, clearAll } = useImageExtraction({ success: (m: string) => toast({ title: 'Success', description: m }), error: (m: string) => toast({ title: 'Error', description: m, variant: 'destructive' }) });
   const { getRootProps, getInputProps, isDragActive } = dropzone;
 
 
@@ -44,9 +44,9 @@ const ImageExtraction = () => {
           </CardHeader>
           <CardContent>
 
-          <ResultsTabs activeTab={activeTab as any} setActiveTab={setActiveTab as any} />
+          <ResultsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          <ResultsList results={analysisResults} previews={imagePreviews} activeTab={activeTab as any} />
+          <ResultsList results={analysisResults} previews={imagePreviews} activeTab={activeTab} />
           </CardContent>
         </Card>
       )}

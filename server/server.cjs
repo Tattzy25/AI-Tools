@@ -126,7 +126,19 @@ app.post('/api/analyze-image', upload.single('image'), async (req, res) => {
       content_analysis: !isImage ? contentAnalysis : undefined,
       csv_report: csvReport,
       summary: {
-        format: isImage ? (dim.type||'').toUpperCase() : (isText ? 'TXT' : isJson ? 'JSON' : isCsv ? 'CSV' : 'XML'),
+        format: (() => {
+          if (isImage) {
+            return (dim.type || '').toUpperCase()
+          } else if (isText) {
+            return 'TXT'
+          } else if (isJson) {
+            return 'JSON'
+          } else if (isCsv) {
+            return 'CSV'
+          } else {
+            return 'XML'
+          }
+        })(),
         dimensions: isImage ? `${width}x${height}` : undefined,
         file_size: `${sizeMb.toFixed(2)} MB`,
         has_exif: isImage ? (!!exif && Object.keys(exif).length > 0) : false,

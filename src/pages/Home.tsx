@@ -6,8 +6,6 @@ import {
   GitBranch, 
   ArrowRight,
   Sparkles,
-  Upload,
-  Database,
   Zap
 } from 'lucide-react';
 

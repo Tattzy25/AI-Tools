@@ -39,7 +39,7 @@ export interface AnalysisResult {
   metadata: {
     format?: string;
     size?: string;
-    [key: string]: any;
+    raw?: Record<string, unknown>;
   };
 }
 
@@ -93,7 +93,7 @@ export interface TransformationRule {
   id: string;
   name: string;
   type: 'string' | 'number' | 'date' | 'boolean';
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   executionOrder: number;
 }
 
@@ -117,7 +117,7 @@ export interface UsageTracking {
   userId: string;
   featureType: 'image_analysis' | 'data_generation' | 'api_mapping';
   operationType: string;
-  requestDetails: Record<string, any>;
+  requestDetails: Record<string, unknown>;
   tokensUsed: number;
   createdAt: Date;
   ipAddress?: string;
