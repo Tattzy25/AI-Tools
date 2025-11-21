@@ -26,6 +26,11 @@ function toDataUrl(mime, buf) {
 }
 
 app.post('/api/analyze-image', upload.single('image'), async (req, res) => {
+  const allowedExtensions = ['json', 'csv', 'xml', 'jpg', 'png'];
+  const fileExt = req.file.originalname.split('.').pop().toLowerCase();
+  if (!allowedExtensions.includes(fileExt)) {
+    return res.status(400).json({ error: 'Unsupported file type. Only JSON, CSV, XML, JPG, PNG allowed.' });
+  }
   try {
     if (!req.file) return res.status(400).json({ success: false, error: 'No image provided' })
     if (!groqKey) return res.status(500).json({ success: false, error: 'Missing GROQ_API_KEY' })

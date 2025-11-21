@@ -1,0 +1,10 @@
+TABLE uploaded_files
+PK file_id
+FIELD file_id STRING
+FIELD original_name STRING
+FIELD mime STRING
+FIELD size_bytes INTEGER
+FIELD width INTEGER NULLABLE
+FIELD height INTEGER NULLABLE
+FIELD exif OBJECT NULLABLE
+FIELD created_at TIMESTAMP
