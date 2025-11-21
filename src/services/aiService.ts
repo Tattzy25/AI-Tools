@@ -1,6 +1,8 @@
 import { AnalysisResult } from '../types'
 
 const getApiBase = () => {
+  const base = (import.meta as any).env?.VITE_API_BASE as string | undefined
+  if (base && typeof base === 'string') return base.replace(/\/$/, '')
   return ''
 }
 
@@ -58,6 +60,10 @@ export const generateDataWithAI = async (
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ horizontalHeaders, verticalHeaders, dataTypes, creativityLevel }),
   })
-  const json = await resp.json()
+  if (!resp.ok) {
+    const text = await resp.text().catch(() => '')
+    throw new Error(`HTTP ${resp.status}${text ? `: ${text}` : ''}`)
+  }
+  const json = await resp.json().catch(() => ({}))
   return Array.isArray(json?.data) ? json.data : []
 }

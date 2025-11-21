@@ -142,16 +142,18 @@ app.post('/api/analyze-image', upload.single('image'), async (req, res) => {
         dimensions: isImage ? `${width}x${height}` : undefined,
         file_size: `${sizeMb.toFixed(2)} MB`,
         has_exif: isImage ? (!!exif && Object.keys(exif).length > 0) : false,
+
         ai_generated: false,
         ai_description: isImage ? String((visual && visual.description) || '') : undefined,
       }
     }
-
     return res.json(response)
   } catch (e) {
     return res.status(500).json({ success: false, error: e && e.message ? e.message : 'Server error' })
   }
-  })
+})
+
+ 
 
 app.post('/api/generate-data', async (req, res) => {
   try {
